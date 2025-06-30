@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 // 预加载关键路由组件
 import Layout from '@/views/layout/index.vue'
@@ -6,7 +6,7 @@ import Dashboard from '@/views/dashboard/index.vue'
 import Login from '@/views/login/index.vue'
 
 const router = createRouter({
-  history: createWebHistory('/qfyd/'),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
