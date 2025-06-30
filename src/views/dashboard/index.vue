@@ -367,7 +367,7 @@
   </template>
   
   <script setup lang="ts">
-  import { ref, onMounted, onBeforeUnmount, watch, nextTick, reactive, computed } from 'vue'
+  import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
   // import { useRouter } from 'vue-router'
   import * as echarts from 'echarts'
   import { ElMessage, ElMessageBox } from 'element-plus'
@@ -384,13 +384,10 @@
     Tools,
     VideoPlay,
     CircleClose,
-    Grid,
-    DataAnalysis,
     Reading,
     Cpu,
-    Connection,
-    DataLine,
-    Promotion
+    Monitor,
+    Iphone
   } from '@element-plus/icons-vue'
   
   // 使用路由
@@ -611,22 +608,6 @@
       })
   }
   
-  // 查看网格详情
-  const viewGridDetail = () => {
-    ElMessage.info('正在跳转到网格管理页面...')
-    setTimeout(() => {
-      ElMessage.success('已跳转到网格管理页面')
-    }, 1000)
-  }
-  
-  // 查看所有项目
-  const viewAllProjects = () => {
-    ElMessage.info('正在跳转到项目管理页面...')
-    setTimeout(() => {
-      ElMessage.success('已跳转到项目管理页面')
-    }, 1000)
-  }
-  
   const trendChartRef = ref<HTMLElement | null>(null)
   let trendChart: echarts.ECharts | null = null
   
@@ -792,25 +773,6 @@
   // 格式化时间函数
   const formatTime = (date: Date) => {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
-  }
-
-  // 获取项目状态样式
-  const getProjectStatusType = (status: string) => {
-    switch (status) {
-      case '已完成': return 'success'
-      case '进行中': return 'primary'
-      case '延期': return 'warning'
-      case '暂停': return 'info'
-      default: return 'info'
-    }
-  }
-
-  // 获取进度状态
-  const getProgressStatus = (progress: number, status: string) => {
-    if (status === '延期') return 'exception'
-    if (status === '暂停') return 'warning'
-    if (progress === 100) return 'success'
-    return ''
   }
 
   // 课程数据
