@@ -176,8 +176,7 @@ import {
   Document, 
   Stamp, 
   Bell, 
-  Timer, 
-  Search
+  Timer
 } from '@element-plus/icons-vue'
 
 const searchQuery = ref('')
