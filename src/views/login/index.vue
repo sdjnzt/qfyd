@@ -6,7 +6,7 @@
         <div class="card-header">
 <!--          <img src="@/assets/logo.png" alt="logo" class="logo" />-->
           <h2>曲阜远东职业技术学院云定制化平台</h2>
-          <p class="subtitle">数字政务 · 便民服务</p>
+<!--          <p class="subtitle">数字政务 · 便民服务</p>-->
         </div>
       </template>
       
