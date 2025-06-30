@@ -32,7 +32,7 @@
             <div class="schedule-body">
               <div class="schedule-row" v-for="(time, timeIndex) in timeSlots" :key="timeIndex">
                 <div class="time-cell">{{ time }}</div>
-                <div class="schedule-cell" v-for="(day, dayIndex) in weekdays" :key="dayIndex">
+                <div class="schedule-cell" v-for="(_, dayIndex) in weekdays" :key="dayIndex">
                   <div 
                     v-for="course in getCoursesForTimeAndDay(timeIndex, dayIndex)" 
                     :key="course.id"

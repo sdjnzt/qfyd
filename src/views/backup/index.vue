@@ -218,7 +218,7 @@ function submitEdit() {
     if (editMode.value === 'add') {
       backupTasks.value.unshift({ ...editForm })
       ElMessage.success('新增成功')
-    } else {
+      } else {
       const idx = backupTasks.value.findIndex(b => b.id === editForm.id)
       if (idx !== -1) {
         backupTasks.value[idx] = { ...editForm }
