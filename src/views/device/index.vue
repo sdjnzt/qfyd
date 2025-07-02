@@ -282,25 +282,25 @@ const deviceCategories = ref<DeviceCategory[]>(categoryTimeData.day)
 // 设备列表
 const deviceList = ref<Device[]>([
   // 网络设备
-  { id: 1, name: '核心路由器-01', category: '网络设备', ip: '192.168.1.1', location: '数据中心A区', status: '在线', lastActive: '2023-06-10 15:30:45' },
-  { id: 2, name: '核心交换机-01', category: '网络设备', ip: '192.168.1.2', location: '数据中心A区', status: '在线', lastActive: '2023-06-10 15:28:32' },
-  { id: 3, name: '核心防火墙-01', category: '网络设备', ip: '192.168.1.3', location: '数据中心A区', status: '告警', lastActive: '2023-06-10 15:15:20' },
-  { id: 4, name: '汇聚交换机-01', category: '网络设备', ip: '192.168.2.1', location: '教学楼A区', status: '在线', lastActive: '2023-06-10 15:10:45' },
-  { id: 5, name: '汇聚交换机-02', category: '网络设备', ip: '192.168.3.1', location: '教学楼B区', status: '离线', lastActive: '2023-06-09 10:30:12' },
+  { id: 1, name: '核心路由器-01', category: '网络设备', ip: '192.168.1.1', location: '数据中心A区', status: '在线', lastActive: '2025-06-10 15:30:45' },
+  { id: 2, name: '核心交换机-01', category: '网络设备', ip: '192.168.1.2', location: '数据中心A区', status: '在线', lastActive: '2025-06-10 15:28:32' },
+  { id: 3, name: '核心防火墙-01', category: '网络设备', ip: '192.168.1.3', location: '数据中心A区', status: '告警', lastActive: '2025-06-10 15:15:20' },
+  { id: 4, name: '汇聚交换机-01', category: '网络设备', ip: '192.168.2.1', location: '教学楼A区', status: '在线', lastActive: '2025-06-10 15:10:45' },
+  { id: 5, name: '汇聚交换机-02', category: '网络设备', ip: '192.168.3.1', location: '教学楼B区', status: '离线', lastActive: '2025-06-09 10:30:12' },
   
   // 服务器
-  { id: 6, name: '应用服务器-01', category: '服务器', ip: '192.168.10.1', location: '数据中心A区', status: '在线', lastActive: '2023-06-10 15:05:30' },
-  { id: 7, name: '数据库服务器-01', category: '服务器', ip: '192.168.10.2', location: '数据中心A区', status: '在线', lastActive: '2023-06-10 14:58:45' },
-  { id: 8, name: '虚拟化平台-01', category: '服务器', ip: '192.168.10.3', location: '数据中心A区', status: '告警', lastActive: '2023-06-10 14:45:22' },
-  { id: 9, name: '备份服务器-01', category: '服务器', ip: '192.168.10.4', location: '数据中心B区', status: '在线', lastActive: '2023-06-10 14:30:18' },
-  { id: 10, name: '应用服务器-02', category: '服务器', ip: '192.168.10.5', location: '数据中心B区', status: '在线', lastActive: '2023-06-10 14:25:40' },
+  { id: 6, name: '应用服务器-01', category: '服务器', ip: '192.168.10.1', location: '数据中心A区', status: '在线', lastActive: '2025-06-10 15:05:30' },
+  { id: 7, name: '数据库服务器-01', category: '服务器', ip: '192.168.10.2', location: '数据中心A区', status: '在线', lastActive: '2025-06-10 14:58:45' },
+  { id: 8, name: '虚拟化平台-01', category: '服务器', ip: '192.168.10.3', location: '数据中心A区', status: '告警', lastActive: '2025-06-10 14:45:22' },
+  { id: 9, name: '备份服务器-01', category: '服务器', ip: '192.168.10.4', location: '数据中心B区', status: '在线', lastActive: '2025-06-10 14:30:18' },
+  { id: 10, name: '应用服务器-02', category: '服务器', ip: '192.168.10.5', location: '数据中心B区', status: '在线', lastActive: '2025-06-10 14:25:40' },
   
   // 存储设备
-  { id: 11, name: '主存储阵列-01', category: '存储设备', ip: '192.168.20.1', location: '数据中心A区', status: '在线', lastActive: '2023-06-10 14:20:15' },
-  { id: 12, name: '备份存储-01', category: '存储设备', ip: '192.168.20.2', location: '数据中心B区', status: '在线', lastActive: '2023-06-10 14:15:33' },
-  { id: 13, name: 'SAN交换机-01', category: '存储设备', ip: '192.168.20.3', location: '数据中心A区', status: '告警', lastActive: '2023-06-10 14:10:22' },
-  { id: 14, name: 'SAN交换机-02', category: '存储设备', ip: '192.168.20.4', location: '数据中心B区', status: '在线', lastActive: '2023-06-10 14:05:18' },
-  { id: 15, name: '归档存储-01', category: '存储设备', ip: '192.168.20.5', location: '数据中心B区', status: '在线', lastActive: '2023-06-10 14:00:55' }
+  { id: 11, name: '主存储阵列-01', category: '存储设备', ip: '192.168.20.1', location: '数据中心A区', status: '在线', lastActive: '2025-06-10 14:20:15' },
+  { id: 12, name: '备份存储-01', category: '存储设备', ip: '192.168.20.2', location: '数据中心B区', status: '在线', lastActive: '2025-06-10 14:15:33' },
+  { id: 13, name: 'SAN交换机-01', category: '存储设备', ip: '192.168.20.3', location: '数据中心A区', status: '告警', lastActive: '2025-06-10 14:10:22' },
+  { id: 14, name: 'SAN交换机-02', category: '存储设备', ip: '192.168.20.4', location: '数据中心B区', status: '在线', lastActive: '2025-06-10 14:05:18' },
+  { id: 15, name: '归档存储-01', category: '存储设备', ip: '192.168.20.5', location: '数据中心B区', status: '在线', lastActive: '2025-06-10 14:00:55' }
 ])
 
 const filteredDeviceList = ref<Device[]>(deviceList.value)

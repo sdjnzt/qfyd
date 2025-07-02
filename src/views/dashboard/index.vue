@@ -128,7 +128,7 @@
             <el-descriptions-item label="系统健康度">
               <el-progress :percentage="92" :stroke-width="8" :format="() => '92%'" status="success" />
             </el-descriptions-item>
-            <el-descriptions-item label="最近更新">2023-06-10</el-descriptions-item>
+            <el-descriptions-item label="最近更新">2025-06-10</el-descriptions-item>
           </el-descriptions>
 
           <div class="platform-actions">

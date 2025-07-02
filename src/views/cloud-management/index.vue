@@ -276,43 +276,43 @@ const licenseData = ref([
 
 // 监控数据
 const serverMonitorData = ref([
-  { name: '教务系统服务器', status: '正常', cpu: 65, memory: 70, disk: 55, lastCheck: '2023-06-10 15:30:45' },
-  { name: '学生管理服务器', status: '正常', cpu: 55, memory: 60, disk: 48, lastCheck: '2023-06-10 15:30:42' },
-  { name: '教师管理服务器', status: '正常', cpu: 45, memory: 52, disk: 60, lastCheck: '2023-06-10 15:30:40' },
-  { name: '资源管理服务器', status: '警告', cpu: 85, memory: 75, disk: 68, lastCheck: '2023-06-10 15:30:38' },
-  { name: '虚拟化平台主机', status: '正常', cpu: 60, memory: 65, disk: 50, lastCheck: '2023-06-10 15:30:35' }
+  { name: '教务系统服务器', status: '正常', cpu: 65, memory: 70, disk: 55, lastCheck: '2025-06-10 15:30:45' },
+  { name: '学生管理服务器', status: '正常', cpu: 55, memory: 60, disk: 48, lastCheck: '2025-06-10 15:30:42' },
+  { name: '教师管理服务器', status: '正常', cpu: 45, memory: 52, disk: 60, lastCheck: '2025-06-10 15:30:40' },
+  { name: '资源管理服务器', status: '警告', cpu: 85, memory: 75, disk: 68, lastCheck: '2025-06-10 15:30:38' },
+  { name: '虚拟化平台主机', status: '正常', cpu: 60, memory: 65, disk: 50, lastCheck: '2025-06-10 15:30:35' }
 ])
 
 const networkMonitorData = ref([
-  { name: '核心路由器', status: '正常', bandwidth: 65, packets: '15000', errors: 0.2, lastCheck: '2023-06-10 15:30:45' },
-  { name: '主防火墙', status: '正常', bandwidth: 60, packets: '12000', errors: 0.1, lastCheck: '2023-06-10 15:30:42' },
-  { name: '教学楼交换机A', status: '警告', bandwidth: 85, packets: '8500', errors: 1.5, lastCheck: '2023-06-10 15:30:40' },
-  { name: '教学楼交换机B', status: '正常', bandwidth: 55, packets: '7200', errors: 0.3, lastCheck: '2023-06-10 15:30:38' },
-  { name: '办公楼交换机', status: '正常', bandwidth: 45, packets: '5000', errors: 0.2, lastCheck: '2023-06-10 15:30:35' }
+  { name: '核心路由器', status: '正常', bandwidth: 65, packets: '15000', errors: 0.2, lastCheck: '2025-06-10 15:30:45' },
+  { name: '主防火墙', status: '正常', bandwidth: 60, packets: '12000', errors: 0.1, lastCheck: '2025-06-10 15:30:42' },
+  { name: '教学楼交换机A', status: '警告', bandwidth: 85, packets: '8500', errors: 1.5, lastCheck: '2025-06-10 15:30:40' },
+  { name: '教学楼交换机B', status: '正常', bandwidth: 55, packets: '7200', errors: 0.3, lastCheck: '2025-06-10 15:30:38' },
+  { name: '办公楼交换机', status: '正常', bandwidth: 45, packets: '5000', errors: 0.2, lastCheck: '2025-06-10 15:30:35' }
 ])
 
 const storageMonitorData = ref([
-  { name: '主存储阵列', status: '正常', capacity: '50TB', usage: 68, iops: '1200', latency: '5ms', lastCheck: '2023-06-10 15:30:45' },
-  { name: '备份存储', status: '正常', capacity: '30TB', usage: 55, iops: '800', latency: '8ms', lastCheck: '2023-06-10 15:30:42' },
-  { name: '教学资源存储', status: '警告', capacity: '20TB', usage: 88, iops: '950', latency: '10ms', lastCheck: '2023-06-10 15:30:40' },
-  { name: '数据归档存储', status: '正常', capacity: '40TB', usage: 45, iops: '300', latency: '12ms', lastCheck: '2023-06-10 15:30:38' },
-  { name: '视频资源存储', status: '正常', capacity: '25TB', usage: 72, iops: '850', latency: '7ms', lastCheck: '2023-06-10 15:30:35' }
+  { name: '主存储阵列', status: '正常', capacity: '50TB', usage: 68, iops: '1200', latency: '5ms', lastCheck: '2025-06-10 15:30:45' },
+  { name: '备份存储', status: '正常', capacity: '30TB', usage: 55, iops: '800', latency: '8ms', lastCheck: '2025-06-10 15:30:42' },
+  { name: '教学资源存储', status: '警告', capacity: '20TB', usage: 88, iops: '950', latency: '10ms', lastCheck: '2025-06-10 15:30:40' },
+  { name: '数据归档存储', status: '正常', capacity: '40TB', usage: 45, iops: '300', latency: '12ms', lastCheck: '2025-06-10 15:30:38' },
+  { name: '视频资源存储', status: '正常', capacity: '25TB', usage: 72, iops: '850', latency: '7ms', lastCheck: '2025-06-10 15:30:35' }
 ])
 
 const educationSystemData = ref([
-  { name: '教务管理系统', status: '正常', users: 120, response: '0.5s', load: 65, lastCheck: '2023-06-10 15:30:45' },
-  { name: '学生管理系统', status: '正常', users: 85, response: '0.8s', load: 55, lastCheck: '2023-06-10 15:30:42' },
-  { name: '教师管理系统', status: '正常', users: 42, response: '0.6s', load: 40, lastCheck: '2023-06-10 15:30:40' },
-  { name: '资源管理系统', status: '警告', users: 68, response: '2.5s', load: 85, lastCheck: '2023-06-10 15:30:38' }
+  { name: '教务管理系统', status: '正常', users: 120, response: '0.5s', load: 65, lastCheck: '2025-06-10 15:30:45' },
+  { name: '学生管理系统', status: '正常', users: 85, response: '0.8s', load: 55, lastCheck: '2025-06-10 15:30:42' },
+  { name: '教师管理系统', status: '正常', users: 42, response: '0.6s', load: 40, lastCheck: '2025-06-10 15:30:40' },
+  { name: '资源管理系统', status: '警告', users: 68, response: '2.5s', load: 85, lastCheck: '2025-06-10 15:30:38' }
 ])
 
 // 告警列表
 const alarmList = ref([
-  { level: '严重', content: '教学资源存储空间使用率达到88%，请及时清理', source: '存储监控', time: '2023-06-10 14:25:30' },
-  { level: '警告', content: '教学楼交换机A带宽使用率超过85%，可能影响网络访问速度', source: '网络监控', time: '2023-06-10 13:45:12' },
-  { level: '警告', content: '资源管理系统响应时间超过2秒，建议检查系统负载', source: '应用监控', time: '2023-06-10 13:20:05' },
-  { level: '提示', content: '服务器计划性维护将于今晚23:00进行，预计持续2小时', source: '系统通知', time: '2023-06-10 12:10:56' },
-  { level: '严重', content: '资源管理服务器CPU使用率持续超过85%，建议立即检查', source: '服务器监控', time: '2023-06-10 11:50:23' }
+  { level: '严重', content: '教学资源存储空间使用率达到88%，请及时清理', source: '存储监控', time: '2025-06-10 14:25:30' },
+  { level: '警告', content: '教学楼交换机A带宽使用率超过85%，可能影响网络访问速度', source: '网络监控', time: '2025-06-10 13:45:12' },
+  { level: '警告', content: '资源管理系统响应时间超过2秒，建议检查系统负载', source: '应用监控', time: '2025-06-10 13:20:05' },
+  { level: '提示', content: '服务器计划性维护将于今晚23:00进行，预计持续2小时', source: '系统通知', time: '2025-06-10 12:10:56' },
+  { level: '严重', content: '资源管理服务器CPU使用率持续超过85%，建议立即检查', source: '服务器监控', time: '2025-06-10 11:50:23' }
 ])
 
 // 图表DOM引用
