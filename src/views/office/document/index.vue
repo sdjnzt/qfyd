@@ -349,7 +349,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Plus, Refresh, Document, Clock, Check, Warning, Download, Printer } from '@element-plus/icons-vue'
+import { Plus, Refresh, Check, Download, Printer } from '@element-plus/icons-vue'
 import type { FormInstance, UploadFile } from 'element-plus'
 
 // 统计卡片数据
@@ -628,24 +628,6 @@ const refreshData = () => {
 const viewDetail = (row: any) => {
   currentDetail.value = { ...row }
   showDetailDialog.value = true
-}
-
-// 处理公文
-const processDocument = (row: any) => {
-  processForm.comment = ''
-  processForm.nextHandler = ''
-  processForm.result = 'approve'
-  showProcessDialog.value = true
-}
-
-// 审批公文
-const approveDocument = (row: any) => {
-  ElMessage.info(`审批公文：${row.id}`)
-}
-
-// 查看流程
-const viewFlow = (row: any) => {
-  ElMessage.info(`查看公文流程：${row.id}`)
 }
 
 // 文件上传处理
