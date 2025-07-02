@@ -177,18 +177,33 @@
 <script setup lang="ts">
 import { ref, reactive, computed, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Bell, Search } from '@element-plus/icons-vue'
+import { Bell } from '@element-plus/icons-vue'
 
 const searchQuery = ref('')
 const currentPage = ref(1)
 const pageSize = ref(20)
 const levelFilter = ref('')
 const sourceFilter = ref('')
-const dateRange = ref([])
-const selectedAlarms = ref([])
+const dateRange = ref<Date[]>([])
+const selectedAlarms = ref<any[]>([])
+
+// 定义告警项的接口
+interface AlarmItem {
+  id: number;
+  level: string;
+  content: string;
+  source: string;
+  time: string;
+  status: string;
+  detail: string;
+  suggestion: string;
+  processor?: string;
+  processTime?: string;
+  processNote?: string;
+}
 
 // 告警数据
-const alarmList = ref([
+const alarmList = ref<AlarmItem[]>([
   { id: 1, level: '严重', content: '教学资源存储空间使用率达到88%，请及时清理', source: '存储监控', time: '2023-06-10 14:25:30', status: '未处理', detail: '存储设备"教学资源存储"剩余空间不足3TB，可能影响系统正常运行。', suggestion: '清理临时文件和过期数据，或者扩容存储设备。' },
   { id: 2, level: '警告', content: '教学楼交换机A带宽使用率超过85%，可能影响网络访问速度', source: '网络监控', time: '2023-06-10 13:45:12', status: '未处理', detail: '教学楼交换机A上行链路带宽使用率持续15分钟超过85%，下行链路正常。', suggestion: '检查是否有大量数据上传任务，必要时增加带宽或分流业务。' },
   { id: 3, level: '警告', content: '资源管理系统响应时间超过2秒，建议检查系统负载', source: '应用监控', time: '2023-06-10 13:20:05', status: '已处理', detail: '资源管理系统平均响应时间为2.5秒，超过警告阈值2秒。', suggestion: '检查系统负载情况，必要时进行资源扩容或优化SQL查询。', processor: '张工', processTime: '2023-06-10 14:30:15', processNote: '已重启应用服务，恢复正常' },
@@ -230,13 +245,15 @@ const filteredAlarms = computed(() => {
   
   // 日期范围过滤
   if (dateRange.value && dateRange.value.length === 2) {
-    const startDate = new Date(dateRange.value[0])
-    const endDate = new Date(dateRange.value[1])
+    const startDate = dateRange.value[0]
+    const endDate = dateRange.value[1]
     
-    result = result.filter(alarm => {
-      const alarmDate = new Date(alarm.time)
-      return alarmDate >= startDate && alarmDate <= endDate
-    })
+    if (startDate && endDate) {
+      result = result.filter(alarm => {
+        const alarmDate = new Date(alarm.time)
+        return alarmDate >= startDate && alarmDate <= endDate
+      })
+    }
   }
   
   return result
@@ -250,7 +267,19 @@ const pagedAlarms = computed(() => {
 
 // 详情弹窗
 const detailDialogVisible = ref(false)
-const detailData = reactive({ id: 0, level: '', content: '', source: '', time: '', status: '', detail: '', suggestion: '', processor: '', processTime: '', processNote: '' })
+const detailData = reactive<AlarmItem>({ 
+  id: 0, 
+  level: '', 
+  content: '', 
+  source: '', 
+  time: '', 
+  status: '', 
+  detail: '', 
+  suggestion: '', 
+  processor: '', 
+  processTime: '', 
+  processNote: '' 
+})
 
 // 处理弹窗
 const processDialogVisible = ref(false)
@@ -283,7 +312,7 @@ function handleCurrentChange(val: number) {
   currentPage.value = val
 }
 
-function handleSelectionChange(val: any[]) {
+function handleSelectionChange(val: AlarmItem[]) {
   selectedAlarms.value = val
 }
 
@@ -291,12 +320,12 @@ function refreshAlarms() {
   ElMessage.success('告警数据已刷新')
 }
 
-function viewDetail(row: any) {
+function viewDetail(row: AlarmItem) {
   Object.assign(detailData, row)
   detailDialogVisible.value = true
 }
 
-function toggleStatus(row: any) {
+function toggleStatus(row: AlarmItem) {
   if (row.status === '已处理') {
     // 直接取消处理
     const idx = alarmList.value.findIndex(a => a.id === row.id)
@@ -328,9 +357,9 @@ function processAlarm() {
       
       // 更新详情数据
       detailData.status = '未处理'
-      detailData.processor = undefined
-      detailData.processTime = undefined
-      detailData.processNote = undefined
+      detailData.processor = ''
+      detailData.processTime = ''
+      detailData.processNote = ''
       
       ElMessage.success('已取消处理标记')
     }
@@ -367,7 +396,7 @@ function confirmProcess() {
   }
 }
 
-function clearAlarm(row: any) {
+function clearAlarm(row: AlarmItem) {
   ElMessageBox.confirm(`确认清除此告警记录？此操作不可撤销！`, '确认清除', {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
