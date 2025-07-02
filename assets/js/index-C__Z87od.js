@@ -1,0 +1,1 @@
+import{d as o,e as t,j as n,r,o as s}from"./vendor-CgAfaZZC.js";import{_ as c}from"./index-BrFT0OYg.js";const _={class:"office-container"},a=o({__name:"index",setup(i){return(p,d)=>{const e=r("router-view");return s(),t("div",_,[n(e)])}}}),l=c(a,[["__scopeId","data-v-09b208d1"]]);export{l as default};
