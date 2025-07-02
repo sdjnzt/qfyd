@@ -734,7 +734,8 @@ const endMeeting = (row: any) => {
 
 // 查看参会人员
 const viewParticipants = (row: any) => {
-  showParticipantsDialog.value = true
+  console.log(`查看会议"${row.title}"的参会人员`);
+  showParticipantsDialog.value = true;
 }
 
 // 提交会议
