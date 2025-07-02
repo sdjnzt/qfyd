@@ -50,7 +50,7 @@
             <span>许可证使用情况</span>
           </div>
             </div>
-      </template>
+          </template>
       <el-table :data="licenseData" style="width: 100%" border stripe>
         <el-table-column prop="name" label="许可名称" min-width="150" />
         <el-table-column prop="type" label="许可类型" width="120" />
@@ -59,7 +59,7 @@
         <el-table-column prop="available" label="可用" width="100" />
         <el-table-column prop="expireDate" label="到期日期" width="120" />
         <el-table-column label="使用情况" width="180">
-          <template #default="{ row }">
+              <template #default="{ row }">
             <el-progress 
               :percentage="Math.round((row.used / row.total) * 100)" 
               :status="getLicenseStatus(row.used, row.total)"
@@ -596,7 +596,7 @@ function initCharts() {
               bottom: '15%',
               top: '15%',
               containLabel: true
-            },
+    },
     xAxis: {
       type: 'category',
               boundaryGap: false,

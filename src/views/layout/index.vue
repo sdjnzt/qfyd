@@ -15,12 +15,34 @@
           text-color="#bfcbd9"
           active-text-color="#409EFF"
         >
-          <el-menu-item v-for="item in routes" :key="item.path" :index="'/' + item.path" class="menu-item">
-            <el-icon class="menu-icon"><component :is="item.meta?.icon" /></el-icon>
-            <template #title>
-              <span class="menu-title">{{ item.meta?.title }}</span>
-            </template>
-          </el-menu-item>
+          <template v-for="item in routes" :key="item.path">
+            <!-- 有子菜单的项目 -->
+            <el-sub-menu v-if="item.children && item.children.length > 0" :index="'/' + item.path">
+              <template #title>
+                <el-icon class="menu-icon"><component :is="item.meta?.icon" /></el-icon>
+                <span class="menu-title">{{ item.meta?.title }}</span>
+              </template>
+              <el-menu-item 
+                v-for="child in item.children" 
+                :key="child.path" 
+                :index="'/' + item.path + '/' + child.path"
+                class="sub-menu-item"
+              >
+                <el-icon class="menu-icon"><component :is="child.meta?.icon" /></el-icon>
+                <template #title>
+                  <span class="menu-title">{{ child.meta?.title }}</span>
+                </template>
+              </el-menu-item>
+            </el-sub-menu>
+            
+            <!-- 没有子菜单的项目 -->
+            <el-menu-item v-else :index="'/' + item.path" class="menu-item">
+              <el-icon class="menu-icon"><component :is="item.meta?.icon" /></el-icon>
+              <template #title>
+                <span class="menu-title">{{ item.meta?.title }}</span>
+              </template>
+            </el-menu-item>
+          </template>
         </el-menu>
       </el-scrollbar>
     </el-aside>
@@ -73,13 +95,16 @@ import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Breadcrumb from '@/components/Breadcrumb.vue'
 import { ArrowDown, User, Key, SwitchButton } from '@element-plus/icons-vue'
+import Layout from '@/views/layout/index.vue'
 
 const route = useRoute()
 const router = useRouter()
 const isCollapse = ref(false)
 
 const routes = computed(() => {
-  return router.options.routes.find(r => r.path === '/' && r.children)?.children || []
+  // 找到包含Layout组件的路由，获取其子路由
+  const layoutRoute = router.options.routes.find(r => r.component === Layout)
+  return layoutRoute?.children || []
 })
 
 const toggleCollapse = () => {
@@ -227,6 +252,37 @@ const handleLogout = () => {
 }
 
 .menu-item:hover {
+  background-color: #263445 !important;
+}
+
+.sub-menu-item {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+  position: relative;
+  margin: 2px 0;
+  padding-left: 20px !important;
+}
+
+.sub-menu-item.is-active {
+  background-color: #263445 !important;
+  border-radius: 4px;
+  margin: 2px 10px;
+  width: calc(100% - 20px);
+}
+
+.sub-menu-item.is-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: #409EFF;
+  border-radius: 2px;
+}
+
+.sub-menu-item:hover {
   background-color: #263445 !important;
 }
 

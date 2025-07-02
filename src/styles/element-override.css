@@ -3,6 +3,226 @@
   这个文件中的样式规则会特别注重使用高优先级选择器和!important
 */
 
+/* 添加一个可以直接用于按钮的内联样式类 */
+.btn-text-visible {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.btn-text-visible * {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline-block !important;
+  position: static !important;
+}
+
+/* 全局按钮修复 - 放在文件最开头 */
+.el-button {
+  position: relative;
+}
+
+.el-button * {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline-block !important;
+}
+
+.el-button--link,
+.el-button[link] {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+.el-button--primary.el-button--link,
+.el-button--primary[link] {
+  color: var(--el-color-primary) !important;
+}
+
+.el-button--success.el-button--link,
+.el-button--success[link] {
+  color: var(--el-color-success) !important;
+}
+
+.el-button--warning.el-button--link,
+.el-button--warning[link] {
+  color: var(--el-color-warning) !important;
+}
+
+.el-button--danger.el-button--link,
+.el-button--danger[link] {
+  color: var(--el-color-danger) !important;
+}
+
+.el-button--info.el-button--link,
+.el-button--info[link] {
+  color: var(--el-color-info) !important;
+}
+
+/* 强制按钮内部文本显示 - 添加在文件最前面 */
+html body .el-button--link .el-button__inner-content,
+html body .el-button[link] .el-button__inner-content {
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: static !important;
+  display: inline-block !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip: auto !important;
+  clip-path: none !important;
+  white-space: normal !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 确保按钮文本始终可见，不仅在悬停时 - 添加在文件最前面 */
+html body .el-button.el-button--link *,
+html body .el-button[link] *,
+html body button.el-button--link *,
+html body button[link] *,
+html body .el-table .el-button.el-button--link *,
+html body .el-table .el-button[link] *,
+html body .el-button--link .el-button__text,
+html body .el-button--link span,
+html body .el-button--link div {
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: static !important;
+  display: inline !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip: auto !important;
+  clip-path: none !important;
+  white-space: normal !important;
+  transform: none !important;
+}
+
+/* 强制按钮内容显示 */
+html body .el-button.el-button--link::before,
+html body .el-button.el-button--link::after,
+html body .el-button[link]::before,
+html body .el-button[link]::after {
+  display: none !important;
+}
+
+/* 禁用任何可能的悬停效果导致的文本显示 */
+html body .el-button.el-button--link:hover *,
+html body .el-button[link]:hover * {
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* 与非悬停状态保持一致 */
+}
+
+/* 最高优先级强制覆盖 - 添加在文件开头 */
+html body .el-button.el-button--link,
+html body .el-button[link],
+html body button.el-button--link,
+html body button[link],
+html body .el-table .el-button.el-button--link,
+html body .el-table .el-button[link] {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  padding: 4px 8px !important;
+  height: auto !important;
+  opacity: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html body .el-button--primary.el-button--link,
+html body .el-button--primary[link] {
+  color: var(--el-color-primary) !important;
+}
+
+html body .el-button--success.el-button--link,
+html body .el-button--success[link] {
+  color: var(--el-color-success) !important;
+}
+
+html body .el-button--warning.el-button--link,
+html body .el-button--warning[link] {
+  color: var(--el-color-warning) !important;
+}
+
+html body .el-button--danger.el-button--link,
+html body .el-button--danger[link] {
+  color: var(--el-color-danger) !important;
+}
+
+html body .el-button--info.el-button--link,
+html body .el-button--info[link] {
+  color: var(--el-color-info) !important;
+}
+
+/* 强制所有link按钮为纯文本样式 - 新增 */
+.el-button.el-button--link,
+.el-button[link],
+.el-button--link,
+button[link] {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--el-color-primary) !important;
+  padding: 4px 8px !important;
+  height: auto !important;
+  opacity: 1 !important;
+}
+
+/* 强制不同类型的link按钮使用对应的颜色 - 新增 */
+.el-button--primary.el-button--link,
+.el-button--primary[link] {
+  color: var(--el-color-primary) !important;
+}
+
+.el-button--success.el-button--link,
+.el-button--success[link] {
+  color: var(--el-color-success) !important;
+}
+
+.el-button--warning.el-button--link,
+.el-button--warning[link] {
+  color: var(--el-color-warning) !important;
+}
+
+.el-button--danger.el-button--link,
+.el-button--danger[link] {
+  color: var(--el-color-danger) !important;
+}
+
+.el-button--info.el-button--link,
+.el-button--info[link] {
+  color: var(--el-color-info) !important;
+}
+
+/* 特别针对表格中的按钮 - 新增 */
+.el-table .el-button--link,
+.el-table .el-button[link] {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 2px 5px !important;
+  margin: 0 2px !important;
+  height: auto !important;
+}
+
+/* 确保表格中的按钮文本可见 - 新增 */
+.el-table .el-button--link span,
+.el-table .el-button[link] span,
+.el-table .el-button--link .el-button__text,
+.el-table .el-button[link] .el-button__text {
+  display: inline !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 /* 链接按钮的文本强制显示 */
 .el-button.el-button--primary.is-link .el-button__inner-content,
 .el-button.el-button--success.is-link .el-button__inner-content,
@@ -74,8 +294,10 @@ button.el-button div {
   padding: 5px 10px !important;
   height: auto !important;
   min-height: 32px !important;
-  background-color: rgba(0, 0, 0, 0.02) !important;
+  background-color: transparent !important;
+  border: none !important;
   border-radius: 4px !important;
+  box-shadow: none !important;
 }
 
 .el-table .el-button.is-link:hover,
@@ -92,8 +314,10 @@ button.el-button div {
 .action-buttons .el-button.is-link,
 .action-buttons .el-button[link] {
   visibility: visible !important;
-  background-color: rgba(0, 0, 0, 0.02) !important;
+  background-color: transparent !important;
+  border: none !important;
   border-radius: 4px !important;
+  box-shadow: none !important;
 }
 
 .action-buttons .el-button.is-link:hover,
@@ -145,4 +369,59 @@ button.el-button div {
     margin: 2px !important;
     padding: 4px 8px !important;
   }
+}
+
+/* 表格中按钮的特殊处理 - 添加在文件最前面 */
+html body .el-table .el-button--link,
+html body .el-table .el-button[link] {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+html body .el-table .el-button--link span,
+html body .el-table .el-button--link .el-button__text,
+html body .el-table .el-button[link] span,
+html body .el-table .el-button[link] .el-button__text {
+  position: static !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  z-index: 11 !important;
+}
+
+/* 自定义文本按钮样式 */
+.text-button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px 8px !important;
+  height: auto !important;
+  min-height: 28px !important;
+}
+
+.text-button.el-button--primary {
+  color: var(--el-color-primary) !important;
+}
+
+.text-button.el-button--success {
+  color: var(--el-color-success) !important;
+}
+
+.text-button.el-button--warning {
+  color: var(--el-color-warning) !important;
+}
+
+.text-button.el-button--danger {
+  color: var(--el-color-danger) !important;
+}
+
+.text-button.el-button--info {
+  color: var(--el-color-info) !important;
+}
+
+.text-button:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
 } 

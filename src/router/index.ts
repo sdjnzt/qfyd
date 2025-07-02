@@ -10,7 +10,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/dashboard'
     },
     {
       path: '/login',
@@ -73,7 +73,27 @@ const router = createRouter({
           path: 'office',
           name: 'Office',
           component: () => import(/* webpackChunkName: "office" */ '@/views/office/index.vue'),
-          meta: { title: '办公自动化', icon: 'Suitcase' }
+          meta: { title: '办公自动化', icon: 'Suitcase' },
+          children: [
+            {
+              path: 'approval',
+              name: 'OfficeApproval',
+              component: () => import('@/views/office/approval/index.vue'),
+              meta: { title: '请假审批', icon: 'Clock' }
+            },
+            {
+              path: 'document',
+              name: 'OfficeDocument',
+              component: () => import('@/views/office/document/index.vue'),
+              meta: { title: '公文流转', icon: 'Document' }
+            },
+            {
+              path: 'meeting',
+              name: 'OfficeMeeting',
+              component: () => import('@/views/office/meeting/index.vue'),
+              meta: { title: '会议管理', icon: 'Timer' }
+            }
+          ]
         },
         {
           path: 'device',
