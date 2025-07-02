@@ -1,7 +1,8 @@
 {
-  "name": "qfyd",
+  "name": "qfyd-cloud-management",
   "private": true,
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "曲阜远东职业技术学院云定制化平台，基于cSight软件的云管平台解决方案",
   "type": "module",
   "scripts": {
     "dev": "vite",

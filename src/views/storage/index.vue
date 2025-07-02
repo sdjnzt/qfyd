@@ -2,6 +2,66 @@
   <div class="storage-container">
     <h1>存储管理</h1>
 <!--    <p>这里是曲阜远东职业技术学院存储管理模块</p>-->
+    <el-card class="license-card" shadow="hover">
+      <template #header>
+        <div class="card-header">
+          <div class="header-left">
+            <el-icon><Key /></el-icon>
+            <span>存储设备许可概览</span>
+          </div>
+          <div class="header-right">
+            <el-radio-group v-model="timeRange" size="small">
+              <el-radio-button label="day">今日</el-radio-button>
+              <el-radio-button label="week">本周</el-radio-button>
+              <el-radio-button label="month">本月</el-radio-button>
+            </el-radio-group>
+          </div>
+        </div>
+      </template>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="stat-box">
+            <div class="stat-title">许可总数</div>
+            <div class="stat-value">20</div>
+            <el-progress :percentage="100" status="success" />
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="stat-box">
+            <div class="stat-title">已使用</div>
+            <div class="stat-value">{{ licenseStats.used }}</div>
+            <el-progress :percentage="(licenseStats.used / 20) * 100" status="success" />
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="stat-box">
+            <div class="stat-title">告警设备</div>
+            <div class="stat-value warning">{{ licenseStats.warning }}</div>
+            <el-progress :percentage="(licenseStats.warning / 20) * 100" status="warning" />
+          </div>
+        </el-col>
+      </el-row>
+    </el-card>
+    
+    <el-card class="storage-stats-card" shadow="hover">
+      <template #header>
+        <div class="card-header">
+          <div class="header-left">
+            <el-icon><DataAnalysis /></el-icon>
+            <span>存储设备状态分析</span>
+          </div>
+        </div>
+      </template>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <div ref="statusChartRef" class="chart-container"></div>
+        </el-col>
+        <el-col :span="12">
+          <div ref="usageChartRef" class="chart-container"></div>
+        </el-col>
+      </el-row>
+    </el-card>
+
     <el-card class="storage-card">
       <template #header>
         <div class="card-header">
@@ -116,12 +176,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, nextTick } from 'vue'
+import { ref, computed, reactive, nextTick, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import * as echarts from 'echarts'
+import { Key, DataAnalysis } from '@element-plus/icons-vue'
 
 const searchQuery = ref('')
 const currentPage = ref(1)
 const pageSize = ref(10)
+const timeRange = ref('day')
+
+// 统计信息
+const timeRangeData = reactive({
+  day: { used: 19, warning: 4 },
+  week: { used: 18, warning: 5 },
+  month: { used: 18, warning: 6 }
+})
+
+const licenseStats = ref(timeRangeData.day)
 
 const storageDevices = ref([
   { id: 1, name: '主存储阵列A', type: 'SAN', capacity: '50TB', used: '30TB', usedPercentage: 60, location: '主机房', status: '正常' },
@@ -133,7 +205,16 @@ const storageDevices = ref([
   { id: 7, name: '分布式存储B', type: '分布式', capacity: '50TB', used: '18TB', usedPercentage: 36, location: '主机房', status: '正常' },
   { id: 8, name: '教学资源存储', type: 'NAS', capacity: '30TB', used: '25TB', usedPercentage: 83, location: '主机房', status: '警告' },
   { id: 9, name: '研究数据存储', type: 'SAN', capacity: '40TB', used: '15TB', usedPercentage: 38, location: '研究中心', status: '正常' },
-  { id: 10, name: '云备份存储', type: 'Object Storage', capacity: '80TB', used: '50TB', usedPercentage: 62, location: '云中心', status: '正常' }
+  { id: 10, name: '云备份存储', type: 'Object Storage', capacity: '80TB', used: '50TB', usedPercentage: 62, location: '云中心', status: '正常' },
+  { id: 11, name: '高性能计算存储', type: 'SAN', capacity: '20TB', used: '12TB', usedPercentage: 60, location: '科研中心', status: '正常' },
+  { id: 12, name: '容灾备份存储', type: 'Object Storage', capacity: '60TB', used: '35TB', usedPercentage: 58, location: '容灾中心', status: '正常' },
+  { id: 13, name: '虚拟化存储池', type: '分布式', capacity: '40TB', used: '28TB', usedPercentage: 70, location: '主机房', status: '正常' },
+  { id: 14, name: '媒体资源存储', type: 'NAS', capacity: '25TB', used: '20TB', usedPercentage: 80, location: '媒体中心', status: '警告' },
+  { id: 15, name: '实验数据存储', type: 'SAN', capacity: '15TB', used: '10TB', usedPercentage: 67, location: '实验楼', status: '正常' },
+  { id: 16, name: '学生作品存储', type: 'NAS', capacity: '10TB', used: '8TB', usedPercentage: 80, location: '教学楼', status: '警告' },
+  { id: 17, name: '图书馆存储', type: 'NAS', capacity: '20TB', used: '15TB', usedPercentage: 75, location: '图书馆', status: '正常' },
+  { id: 18, name: '远程备份存储', type: 'Object Storage', capacity: '50TB', used: '30TB', usedPercentage: 60, location: '远程机房', status: '正常' },
+  { id: 19, name: '档案资料存储', type: 'NAS', capacity: '30TB', used: '18TB', usedPercentage: 60, location: '档案室', status: '警告' }
 ])
 
 const filteredStorageDevices = computed(() => {
@@ -150,13 +231,196 @@ const pagedStorageDevices = computed(() => {
   return filteredStorageDevices.value.slice(start, start + pageSize.value)
 })
 
+// 图表相关变量
+let statusChart: echarts.ECharts | null = null
+let usageChart: echarts.ECharts | null = null
+const statusChartRef = ref<HTMLElement | null>(null)
+const usageChartRef = ref<HTMLElement | null>(null)
+
+// 生命周期钩子
+onMounted(() => {
+  nextTick(() => {
+    initCharts()
+  })
+})
+
+// 监听时间范围变化
+watch(timeRange, (newVal) => {
+  licenseStats.value = timeRangeData[newVal as keyof typeof timeRangeData]
+  ElMessage.success(`已切换到${newVal === 'day' ? '今日' : newVal === 'week' ? '本周' : '本月'}数据`)
+  initCharts()
+})
+
+// 初始化图表
+function initCharts() {
+  nextTick(() => {
+    try {
+      // 状态分布图
+      if (statusChartRef.value) {
+        if (statusChart) {
+          statusChart.dispose()
+        }
+        statusChart = echarts.init(statusChartRef.value)
+        
+        const normalCount = storageDevices.value.filter(s => s.status === '正常').length
+        const warningCount = storageDevices.value.filter(s => s.status === '警告').length
+        const errorCount = storageDevices.value.filter(s => s.status === '错误').length
+        const offlineCount = storageDevices.value.filter(s => s.status === '离线').length
+        
+        statusChart.setOption({
+          title: {
+            text: '存储设备状态分布',
+            left: 'center'
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          legend: {
+            bottom: '5%',
+            left: 'center'
+          },
+          series: [
+            {
+              name: '设备状态',
+              type: 'pie',
+              radius: ['40%', '70%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: false
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: '16',
+                  fontWeight: 'bold'
+                }
+              },
+              labelLine: {
+                show: false
+              },
+              data: [
+                { value: normalCount, name: '正常', itemStyle: { color: '#67C23A' } },
+                { value: warningCount, name: '警告', itemStyle: { color: '#E6A23C' } },
+                { value: errorCount, name: '错误', itemStyle: { color: '#F56C6C' } },
+                { value: offlineCount, name: '离线', itemStyle: { color: '#909399' } }
+              ]
+            }
+          ]
+        })
+      }
+      
+      // 容量使用分布图
+      if (usageChartRef.value) {
+        if (usageChart) {
+          usageChart.dispose()
+        }
+        usageChart = echarts.init(usageChartRef.value)
+        
+        // 按照存储类型统计总容量和已使用容量
+        const typeStats: Record<string, { total: number, used: number }> = {}
+        
+        storageDevices.value.forEach(device => {
+          // 提取容量数字部分
+          const totalCapacity = parseInt(device.capacity.replace(/[^0-9]/g, ''))
+          const usedCapacity = parseInt(device.used.replace(/[^0-9]/g, ''))
+          
+          if (!typeStats[device.type]) {
+            typeStats[device.type] = { total: 0, used: 0 }
+          }
+          
+          typeStats[device.type].total += totalCapacity
+          typeStats[device.type].used += usedCapacity
+        })
+        
+        const types = Object.keys(typeStats)
+        const totalData = types.map(type => typeStats[type].total)
+        const usedData = types.map(type => typeStats[type].used)
+        
+        usageChart.setOption({
+          title: {
+            text: '存储容量使用情况',
+            left: 'center'
+          },
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            },
+            formatter: function(params: any) {
+              const typeIndex = params[0].dataIndex
+              const type = types[typeIndex]
+              const total = typeStats[type].total
+              const used = typeStats[type].used
+              const percentage = Math.round((used / total) * 100)
+              return `${type}<br/>总容量: ${total}TB<br/>已使用: ${used}TB (${percentage}%)`
+            }
+          },
+          legend: {
+            data: ['总容量', '已使用'],
+            bottom: '5%'
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '15%',
+            top: '15%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+            data: types
+          },
+          yAxis: {
+            type: 'value',
+            name: '容量(TB)'
+          },
+          series: [
+            {
+              name: '总容量',
+              type: 'bar',
+              emphasis: {
+                focus: 'series'
+              },
+              data: totalData,
+              itemStyle: {
+                color: '#409EFF'
+              }
+            },
+            {
+              name: '已使用',
+              type: 'bar',
+              emphasis: {
+                focus: 'series'
+              },
+              data: usedData,
+              itemStyle: {
+                color: '#67C23A'
+              }
+            }
+          ]
+        })
+      }
+    } catch (error) {
+      console.error('初始化图表失败:', error)
+    }
+  })
+}
+
 function handleSearch() {
   currentPage.value = 1
 }
+
 function handleSizeChange(val: number) {
   pageSize.value = val
   currentPage.value = 1
 }
+
 function handleCurrentChange(val: number) {
   currentPage.value = val
 }
@@ -166,6 +430,7 @@ const getUsageStatus = (percentage: number) => {
   if (percentage > 60) return 'warning'
   return 'success'
 }
+
 const getStatusType = (status: string) => {
   switch (status) {
     case '正常':
@@ -180,6 +445,7 @@ const getStatusType = (status: string) => {
       return 'info'
   }
 }
+
 // 新增/编辑弹窗
 const editDialogVisible = ref(false)
 const editMode = ref<'add' | 'edit'>('add')
@@ -197,6 +463,7 @@ const editRules = {
   location: [{ required: true, message: '请输入位置', trigger: 'blur' }],
   status: [{ required: true, message: '请选择状态', trigger: 'change' }]
 }
+
 function openAddDialog() {
   editMode.value = 'add'
   const maxId = Math.max(...storageDevices.value.map(s => s.id), 0)
@@ -204,12 +471,14 @@ function openAddDialog() {
   editDialogVisible.value = true
   nextTick(() => editFormRef.value?.clearValidate())
 }
+
 function openEditDialog(row: any) {
   editMode.value = 'edit'
   Object.assign(editForm, row)
   editDialogVisible.value = true
   nextTick(() => editFormRef.value?.clearValidate())
 }
+
 function submitEdit() {
   editFormRef.value.validate((valid: boolean) => {
     if (!valid) return
@@ -224,8 +493,11 @@ function submitEdit() {
       }
     }
     editDialogVisible.value = false
+    // 更新图表
+    initCharts()
   })
 }
+
 function confirmDelete(row: any) {
   ElMessageBox.confirm(`确定要删除存储设备"${row.name}"吗？`, '删除确认', { type: 'warning' })
     .then(() => {
@@ -233,13 +505,17 @@ function confirmDelete(row: any) {
       if (idx !== -1) {
         storageDevices.value.splice(idx, 1)
         ElMessage.success('删除成功')
+        // 更新图表
+        initCharts()
       }
     })
     .catch(() => {})
 }
+
 // 详情弹窗
 const detailDialogVisible = ref(false)
 const detailData = reactive({ name: '', type: '', capacity: '', used: '', usedPercentage: 0, location: '', status: '' })
+
 function viewDetail(row: any) {
   Object.assign(detailData, row)
   detailDialogVisible.value = true
@@ -251,19 +527,57 @@ function viewDetail(row: any) {
   padding: 20px;
 }
 
+.license-card,
+.storage-stats-card,
 .storage-card {
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .card-header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
 }
 
 .header-actions {
   display: flex;
-  gap: 10px;
+  align-items: center;
+}
+
+.stat-box {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  padding: 16px;
+  text-align: center;
+}
+
+.stat-title {
+  font-size: 16px;
+  color: #606266;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #409EFF;
+  margin-bottom: 8px;
+}
+
+.stat-value.warning {
+  color: #E6A23C;
+}
+
+.chart-container {
+  height: 300px;
 }
 
 .pagination-container {

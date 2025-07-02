@@ -28,6 +28,12 @@ const router = createRouter({
           meta: { title: '首页', icon: 'House' }
         },
         {
+          path: 'cloud-management',
+          name: 'CloudManagement',
+          component: () => import('@/views/cloud-management/index.vue'),
+          meta: { title: '云管平台', icon: 'Monitor' }
+        },
+        {
           path: 'education',
           name: 'Education',
           component: () => import(/* webpackChunkName: "education" */ '@/views/education/index.vue'),
@@ -116,6 +122,12 @@ const router = createRouter({
           name: 'Security',
           component: () => import('@/views/security/index.vue'),
           meta: { title: '安全防护', icon: 'Lock' }
+        },
+        {
+          path: 'alarms',
+          name: 'Alarms',
+          component: () => import('@/views/alarms/index.vue'),
+          meta: { title: '告警中心', icon: 'Bell' }
         }
       ]
     }

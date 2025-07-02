@@ -24,6 +24,120 @@
           </el-card>
         </el-col>
       </el-row>
+
+      <!-- 云管平台概览 -->
+      <el-card class="csight-overview" shadow="hover">
+        <template #header>
+          <div class="card-header">
+            <div class="header-left">
+              <el-icon><Monitor /></el-icon>
+              <span>云管平台概览</span>
+              <el-tag type="success" effect="dark" class="ml-10">已授权</el-tag>
+            </div>
+            <div class="header-actions">
+              <el-tooltip content="数据为实时同步">
+                <span class="sync-time">最后同步: {{ formatTime(new Date()) }}</span>
+              </el-tooltip>
+              <el-button type="primary" size="small" @click="goToCloudManagement">进入云管平台</el-button>
+            </div>
+          </div>
+        </template>
+
+        <el-row :gutter="20" class="csight-stats">
+          <el-col :xs="24" :sm="12" :md="6">
+            <div class="csight-stat-card">
+              <div class="stat-header">
+                <span>教学管理平台</span>
+              </div>
+              <div class="stat-body">
+                <div class="stat-num">4</div>
+                <div class="stat-text">已授权套数</div>
+                <div class="stat-progress">
+                  <el-progress type="dashboard" :percentage="100" status="success" :width="80" />
+                </div>
+                <div class="stat-footer">
+                  <span class="stat-label">全部已激活</span>
+                </div>
+              </div>
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="6">
+            <div class="csight-stat-card">
+              <div class="stat-header">
+                <span>网络设备管理</span>
+              </div>
+              <div class="stat-body">
+                <div class="stat-num">48/50</div>
+                <div class="stat-text">已授权设备数</div>
+                <div class="stat-progress">
+                  <el-progress type="dashboard" :percentage="96" status="success" :width="80" />
+                </div>
+                <div class="stat-footer">
+                  <span class="stat-label">授权充足</span>
+                </div>
+              </div>
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="6">
+            <div class="csight-stat-card">
+              <div class="stat-header">
+                <span>服务器管理</span>
+              </div>
+              <div class="stat-body">
+                <div class="stat-num">30/30</div>
+                <div class="stat-text">已授权设备数</div>
+                <div class="stat-progress">
+                  <el-progress type="dashboard" :percentage="100" status="warning" :width="80" />
+                </div>
+                <div class="stat-footer">
+                  <span class="stat-label warning-text">已用尽授权</span>
+                </div>
+              </div>
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="6">
+            <div class="csight-stat-card">
+              <div class="stat-header">
+                <span>存储设备管理</span>
+              </div>
+              <div class="stat-body">
+                <div class="stat-num">19/20</div>
+                <div class="stat-text">已授权设备数</div>
+                <div class="stat-progress">
+                  <el-progress type="dashboard" :percentage="95" status="success" :width="80" />
+                </div>
+                <div class="stat-footer">
+                  <span class="stat-label">授权充足</span>
+                </div>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+
+        <div class="platform-summary">
+          <h3>云管平台状态概要</h3>
+          <el-descriptions :column="4" border>
+            <el-descriptions-item label="平台版本">cSight v5.2.3</el-descriptions-item>
+            <el-descriptions-item label="授权状态">已激活</el-descriptions-item>
+            <el-descriptions-item label="到期时间">2025-12-31</el-descriptions-item>
+            <el-descriptions-item label="部署位置">学院主数据中心</el-descriptions-item>
+            <el-descriptions-item label="监控设备总数">103</el-descriptions-item>
+            <el-descriptions-item label="告警数">
+              <el-tag type="danger">12</el-tag>
+            </el-descriptions-item>
+            <el-descriptions-item label="系统健康度">
+              <el-progress :percentage="92" :stroke-width="8" :format="() => '92%'" status="success" />
+            </el-descriptions-item>
+            <el-descriptions-item label="最近更新">2023-06-10</el-descriptions-item>
+          </el-descriptions>
+
+          <div class="platform-actions">
+            <el-button type="primary" @click="viewCloudMonitoring">查看设备监控</el-button>
+            <el-button type="warning" @click="viewAlarms">查看告警 <el-badge value="12" /></el-button>
+            <el-button type="success" @click="viewLicenses">许可管理</el-button>
+          </div>
+        </div>
+      </el-card>
   
       <!-- 教学系统状态 -->
       <el-card class="system-status" shadow="hover">
@@ -368,7 +482,7 @@
   
   <script setup lang="ts">
   import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
-  // import { useRouter } from 'vue-router'
+  import { useRouter } from 'vue-router'
   import * as echarts from 'echarts'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { 
@@ -390,8 +504,7 @@
     Iphone
   } from '@element-plus/icons-vue'
   
-  // 使用路由
-  // const router = useRouter()
+  const router = useRouter()
   
   // 统计卡片数据
   const statCards = [
@@ -832,6 +945,23 @@
   const viewAllDevices = () => {
     console.log('查看所有设备')
   }
+  
+  // 云管平台相关功能
+  const goToCloudManagement = () => {
+    router.push('/cloud-management')
+  }
+  
+  const viewCloudMonitoring = () => {
+    router.push('/monitor')
+  }
+  
+  const viewAlarms = () => {
+    router.push('/alarms')
+  }
+  
+  const viewLicenses = () => {
+    router.push('/cloud-management')
+  }
   </script>
   
   <style scoped>
@@ -1205,5 +1335,83 @@
     margin-right: 10px;
     color: #909399;
     font-size: 13px;
+  }
+
+  /* 云管平台样式 */
+  .csight-overview {
+    margin-bottom: 20px;
+  }
+
+  .csight-stats {
+    margin-bottom: 20px;
+  }
+
+  .csight-stat-card {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f5f7fa;
+    height: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+  }
+
+  .csight-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .stat-header {
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ebeef5;
+    margin-bottom: 15px;
+  }
+
+  .stat-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-num {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #303133;
+  }
+
+  .stat-text {
+    font-size: 14px;
+    color: #909399;
+    margin-bottom: 15px;
+  }
+
+  .stat-footer {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #67c23a;
+  }
+
+  .warning-text {
+    color: #e6a23c;
+  }
+
+  .platform-summary {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #ebeef5;
+  }
+
+  .platform-summary h3 {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #303133;
+  }
+
+  .platform-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
   }
   </style>
